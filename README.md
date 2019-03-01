@@ -1,65 +1,42 @@
-# WORK TASK #
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-**Please read this document thoroughly** and plan your work accordingly.
-When ready, fork the repository and create a feature branch. It is in this branch we
-expect your delivery.
+## Motivation
+Reason behind choosing create-react-app is to save the time behind project/bundler/transpiler setup.
+Since i did not need many reusable variables in stylesheets and hence no CSS preprocessors like SASS/LESS
 
-This Work Task is divided into three parts:
+I understand that React.js might be a bit overkill for this task, however my motivation behind using React.js instead of plain JS or Library like Jquery/jquery UI are following
+- Component based architechture
+- Controlled data
+- JSX is React.js helps prevent Injection attack, hence input sanitization becomes easier
+- Usefull use cases of nice and regular Javascript concepts
+- .. and of course I am interested in playing with React :)
 
-### 1: CSS-wizardry ###
+I could have seperated more parts of functionality in the project which I did not because there was no use case(like to reuse in different parts in the project) fot that is this particular project.
+local storage was used here for persitant search history.
 
+There is room for further development and improvment since it was done like a typical POC. I am very interested to listen to your feedback :)
 
-![alt text](https://raw.githubusercontent.com/hmfe/54321/master/button.png)
+### Future todo
+- Decide on carefull naming conventions
+- Maybe more seperation of concern for better reusability
+- Use of CSS preprocessor and/or test with a CSS framework
+- variables for colors, media-queries and mixin etc.
+- Test new React.js features in the project(there might be use cases or maybe not..)
 
-Recreate this button using only HTML/CSS and using as few HTML-elements as
-possible. (HINT: It is possible to solve this using only one `<button>`)
+## Instruction
+- cd into the project directory
+- run - npm install
 
+### To see button go to button/ from project directory and open the button.html file.
 
-* You can provide a solution for this separately or as a part of the solution for (3) *
+## Available Scripts
 
+In the project directory, you can run:
 
-### 2: Please answer the questions found in the link below ###
-https://sv.surveymonkey.com/r/QCT8SHL
+### `npm start`
 
-### 3: Implement a simple search application ###
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-<img src="https://raw.githubusercontent.com/hmfe/54321/master/search.png" style="width: 400px">
-Implement a simple search form. The search should use a public REST API of your
-choice using JavaScript.
-
-- Search for title, return title (or something like that)
-- Display partial search results in a list beneath the search field (Auto complete)
-- Display the selected results in an editable list beneath the search component 
-
-  * Selected search result should be saved with date/time stamp (as a
-search history)
-  * User should be able to delete a result from the list or delete the entire
-list.
-
-- The application should be responsive, adapting to changes of the viewport. 
-
-### What we will look at: ###
-
-- HTML5: Semantic markup, SEO optimization, Accessibility
-   * Use HTML5 and show us that you have deep knowledge of semantic
-markup.
-
-- CSS3: Responsivity, use of pseudo elements, HTML entities and complexity
-of solution
-  * Surprise us with interesting solutions and show off your skills!
-  * NOTE: Solution based on premade CSS frameworks will be completely discarded
-
-- JS: complexity, sanity, comments and security.
-  * The search should fetch data for each entry, don’t store a complete
-database response in a variable and iterate through that.
-  * Sanitize your inputs and don’t stress the API more than necessary.
-
-- General sanity check on structure and solution
-  * Show to us that you know - how front-end development should be
-done.
-
-
-
-When done, push your branch and let us know it’s done by making a pull request.
-
-**Good Luck and have fun!**
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console
