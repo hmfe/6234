@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 import localStorage from 'local-storage'
 import './AutoCompleteText.css'
 
@@ -60,6 +61,29 @@ export default class AutoComplete extends Component {
     
   }
 
+  reqForSuggestionApi = async value => {
+    this.setState({ isLoading: true})
+    const response = await axios('https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=opensearch&limit=10&format=json&search=' + value)
+    // console.log(response)
+    const suggestions = await response.data[1].map(item => item);
+    this.setState({
+      suggestions: suggestions,
+      isLoading: false
+    })
+  }
+
+  handleSearchTextChange= async e => {
+    const value = e.target.value
+    if (value === '') {
+      this.setState({ suggestions: [], text: value})
+    } else {
+      this.reqForSuggestionApi(value)
+      this.setState({
+        text: value
+      })
+    }
+  }
+
   getLocalStorage = () => {
     const localStorageData = localStorage.get('searchItems')
     if(localStorageData === null) {
@@ -111,7 +135,7 @@ export default class AutoComplete extends Component {
     return (
       <div className="AutoCompleteText">
         <div className="InputAndSuggestionContainer">
-          <input value={text} onChange={this.onTextChange} type="text"/>
+          <input value={text} onChange={e => this.handleSearchTextChange(e)} type="text"/>
           <div className="suggestionListsContainer">
             {error ? <h3>{error.message}</h3> : null} 
             { 

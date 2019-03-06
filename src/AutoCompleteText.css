@@ -1,3 +1,5 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.css';
+
 .AutoCompleteText {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif;
@@ -47,9 +49,9 @@
   background-color: rgba(128, 128, 128, .20)
 }
 
-.AutoCompleteText .selecgedSuggestionContainer {
+/* .AutoCompleteText .selecgedSuggestionContainer {
 
-}
+} */
 
 .historyHeaders {
   display: flex;
@@ -81,9 +83,9 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.selectedListItem .selectedListDate {
+/* .selectedListItem .selectedListDate {
 
-}
+} */
 
 .cross {
   opacity: 0.7;
@@ -95,19 +97,16 @@
   opacity: 1;
 }
 
-.cross:before, .cross:after {
-  /* right: 32%; */
-  content: '';
-  height: 1rem;
-  width: 0.15rem;
-  background-color: white;
+.cross::before, .cross::after {
+  font-family: "Font Awesome 5 Free";
+  content: '\f056';
   position: absolute;
+  font-weight: 900;
+  font-size: 1rem;
 }
-.cross:before {
-  transform: rotate(45deg);
-}
-.cross:after {
-  transform: rotate(-45deg);
+.cross:hover::before {
+  transform: rotate(180deg) scale(1.2);;
+  transition-duration: 0.8s;
 }
 
 @media (max-width: 640px) {
