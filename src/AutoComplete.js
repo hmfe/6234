@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import localStorage from 'local-storage'
+import { search } from './utils'
 import './AutoCompleteText.css'
 
 import SelectedSuggestions from './SelectedSuggestions'
@@ -21,61 +21,41 @@ export default class AutoComplete extends Component {
   componentDidMount() {
       this.setState({suggestionSelected: this.getLocalStorage()})  
   }
-  
-  onTextChange = (e) => {
-    const value = e.target.value;
-    const wikiUrl = 'https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=opensearch&limit=10&format=json&search=' + value
-    let suggestions = []
 
-    if (value === '') {
-      this.setState({ suggestions: [], text: value})
-    } else {
-        this.setState({ isLoading: true})
-        fetch(wikiUrl)
-          .then( response => {
-            if (!response.ok) { 
-                this.setState({
-                error: response,
-                isLoading: false
-              })
-             } else {
-                response.json().then( data => {
-                  suggestions = data[1].map(item => item);
-                  
-                  this.setState({
-                    suggestions: suggestions,
-                    isLoading: false
-                  })
-                })
-             }
-          })
-          .catch( (err) => {
-            console.log("Fetch Error!!", err);
-            this.setState({
-              isLoading: false,
-              error: err
-            })
-          });
-    }
-    this.setState({ text: value })
-    
-  }
-
+  /* api req with axios */
   reqForSuggestionApi = async value => {
     this.setState({ isLoading: true})
-    const response = await axios('https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=opensearch&limit=10&format=json&search=' + value)
-    // console.log(response)
-    const suggestions = await response.data[1].map(item => item);
-    this.setState({
-      suggestions: suggestions,
-      isLoading: false
-    })
+    const data = await search('https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=opensearch&limit=10&format=json&search=' + value)
+    
+    if (data.toString().toLowerCase().includes('error')) {
+      this.setState({
+        error: data,
+        isLoading: false
+      })
+    }else if (data.toString().toLowerCase().includes('cancel')) {
+      this.setState({ isLoading: true})
+    }else {
+      var suggestions = data[1].map(item => item)
+      if(suggestions.length > 0) {
+        this.setState({
+          suggestions: suggestions,
+          isLoading: false,
+          error: null
+        })
+      } else {
+        this.setState({
+          suggestions: ["No suggestions found"],
+          isLoading: false,
+          error: null
+        })
+      }
+    }
   }
 
   handleSearchTextChange= async e => {
     const value = e.target.value
     if (value === '') {
-      this.setState({ suggestions: [], text: value})
+      this.setState({ suggestions: [], text: value, error: null})
     } else {
       this.reqForSuggestionApi(value)
       this.setState({
@@ -137,11 +117,11 @@ export default class AutoComplete extends Component {
         <div className="InputAndSuggestionContainer">
           <input value={text} onChange={e => this.handleSearchTextChange(e)} type="text"/>
           <div className="suggestionListsContainer">
-            {error ? <h3>{error.message}</h3> : null} 
+            {error ? <div className="errorMsg"><h3>{error.message}</h3></div> : null} 
             { 
               !isLoading ? (this.renderSuggestions()) 
               : 
-              (<h3>Loading...</h3>)
+              (<h3 className="loadingMsg">Loading...</h3>)
             } 
           </div>
         </div>
