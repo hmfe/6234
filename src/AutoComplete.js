@@ -27,12 +27,12 @@ export default class AutoComplete extends Component {
     this.setState({ isLoading: true})
     const data = await search('https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=opensearch&limit=10&format=json&search=' + value)
     
-    if (data.toString().toLowerCase().includes('error')) {
+    if (data.message) {
       this.setState({
         error: data,
         isLoading: false
       })
-    }else if (data.toString().toLowerCase().includes('cancel')) {
+    }else if (!data[1])  {
       this.setState({ isLoading: true})
     }else {
       var suggestions = data[1].map(item => item)

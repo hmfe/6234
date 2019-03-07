@@ -14,14 +14,11 @@ const makeRequestCreator = () => {
     try{
       const res = await axios(query, {cancelToken: cancelToken.token})
       const result = res.data
-      console.log(result);
-      
-      
       return result;
     } catch(error) {
         if(axios.isCancel(error)) {
           // Handle if request was cancelled
-          console.log('Request canceled', error.message);
+          console.log('Request canceled', error);
           return error
         } else {
           // Handle usual errors
